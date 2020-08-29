@@ -1,13 +1,19 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx
-  namespace: nginx
+  name: mypod
+  # namespace: nginx
   labels:
     app: nginx
 spec:
+  # nodeName: gke-myk8s-default-pool-3636d28a-h9bd
   containers:
-  - name: nginx
+  - name: myfrontend
     image: nginx
-  # nodeSelector:
-  #   node: node1
+    volumeMounts:
+    - name: mypd
+      mountPath: "/var/www/html"
+  volumes:
+    - name:  mypd
+      persistentVolumeClaim:
+        claimName: pvc-nginx
